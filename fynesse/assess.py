@@ -14,9 +14,10 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     south = latitude - box_height
     west = longitude - box_width
     east = longitude + box_width
+    bbox = (west, south, east, north)
 
     try:
-        pois = ox.features_from_bbox(north, south, east, west, poi_tags)
+        pois = ox.features_from_bbox(bbox, poi_tags)
         fig, ax = ox.plot_footprints(ox.geocode_to_gdf(place_name), figsize=(8, 8), show=False, close=False)
         pois.plot(ax=ax, color="red", markersize=5)
         plt.title(f"Points of Interest in {place_name}")
