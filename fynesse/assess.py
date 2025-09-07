@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from access import get_osm_datapoints
 
 features = [
     ("building", None),
@@ -49,7 +50,6 @@ def get_osm_features(latitude, longitude, box_size_km=2, tags=None):
     """
     Access raw OSM features.
     """
-    from access import get_osm_datapoints
     return get_osm_datapoints(latitude, longitude, box_size_km, tags)
 
 def get_feature_vector(latitude, longitude, box_size_km=2, features=None):
