@@ -92,6 +92,8 @@ def build_feature_dataframe(city_dicts, features, box_size_km=1):
             results[city] = vec
     return pd.DataFrame(results).T
 
+
+
 def visualize_feature_space(X, y, method='PCA'):
     """
     Visualize feature space using PCA or t-SNE.
@@ -104,8 +106,21 @@ def visualize_feature_space(X, y, method='PCA'):
         raise ValueError("Method must be 'PCA' or 'tSNE'")
 
     X_reduced = reducer.fit_transform(X)
+
+    # Convert labels to numeric codes
+    y_codes = pd.Series(y).astype("category").cat.codes  
+
     plt.figure(figsize=(8, 6))
-    plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y, cmap="tab10", alpha=0.7)
-    plt.colorbar(label="Class")
+    scatter = plt.scatter(
+        X_reduced[:, 0],
+        X_reduced[:, 1],
+        c=y_codes,
+        cmap="tab10",
+        alpha=0.7
+    )
+    # Use proper legend with original labels
+    legend_labels = pd.Series(y).astype("category").cat.categories
+    plt.legend(*scatter.legend_elements(), title="Class", labels=legend_labels)
     plt.title(f"Feature Space Visualization ({method})")
     plt.show()
+
