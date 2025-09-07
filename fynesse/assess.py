@@ -56,7 +56,6 @@ def get_feature_vector(latitude, longitude, box_size_km=2, features=None):
     """
     Quantify geographic features into a feature vector.
     """
-    from access import get_osm_datapoints
 
     # Build tags dict
     tags = {k: True for k, _ in features} if features else {}
