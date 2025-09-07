@@ -57,10 +57,6 @@ def get_feature_vector(latitude, longitude, box_size_km=2, features=None):
     Quantify geographic features into a feature vector.
     """
 
-    # Build tags dict
-    # tags = {k: True for k, _ in features} if features else {}
-
-    # Query OSM
     pois = get_osm_datapoints(latitude, longitude, box_size_km, tags)
 
     # Initialize with zeros
@@ -81,6 +77,20 @@ def get_feature_vector(latitude, longitude, box_size_km=2, features=None):
                 feature_vec[col_name] = pois_df[key].notna().sum()
 
     return feature_vec
+
+def build_feature_dataframe(city_dicts, features, box_size_km=1):
+    results = {}
+    for country, cities in city_dicts:
+        for city, coords in cities.items():
+            vec = get_feature_vector(
+                coords["latitude"],
+                coords["longitude"],
+                box_size_km=box_size_km,
+                features=features
+            )
+            vec["country"] = country
+            results[city] = vec
+    return pd.DataFrame(results).T
 
 def visualize_feature_space(X, y, method='PCA'):
     """
