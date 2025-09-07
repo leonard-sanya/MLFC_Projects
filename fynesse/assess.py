@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
-from access import get_osm_datapoints
+from fynesse.access import get_osm_datapoints
 
 features = [
     ("building", None),
