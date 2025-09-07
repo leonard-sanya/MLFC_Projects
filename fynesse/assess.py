@@ -8,6 +8,26 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     """
     Plot city map with OSM data overlay.
     """
+
+    features = [
+    ("building", None),
+    ("amenity", None),
+    ("amenity", "school"),
+    ("amenity", "hospital"),
+    ("amenity", "restaurant"),
+    ("amenity", "cafe"),
+    ("shop", None),
+    ("tourism", None),
+    ("tourism", "hotel"),
+    ("tourism", "museum"),
+    ("leisure", None),
+    ("leisure", "park"),
+    ("historic", None),
+    ("amenity", "place_of_worship"),]
+
+
+    tags = {k: True for k, _ in features} if features else {}
+
     box_width = box_size_km / 111
     box_height = box_size_km / 111
     north = latitude + box_height
@@ -17,7 +37,7 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     bbox = (west, south, east, north)
 
     try:
-        pois = ox.features_from_bbox(bbox, poi_tags)
+        pois = ox.features_from_bbox(bbox, tags)
         fig, ax = ox.plot_footprints(ox.geocode_to_gdf(place_name), figsize=(8, 8), show=False, close=False)
         pois.plot(ax=ax, color="red", markersize=5)
         plt.title(f"Points of Interest in {place_name}")
