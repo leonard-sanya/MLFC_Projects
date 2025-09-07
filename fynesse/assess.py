@@ -4,12 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
-def plot_city_map(place_name, latitude, longitude, box_size_km=2):
-    """
-    Plot city map with OSM data overlay.
-    """
-
-    features = [
+features = [
     ("building", None),
     ("amenity", None),
     ("amenity", "school"),
@@ -26,7 +21,12 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2):
     ("amenity", "place_of_worship"),]
 
 
-    tags = {k: True for k, _ in features} if features else {}
+tags = {k: True for k, _ in features} if features else {}
+
+def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None):
+    """
+    Plot city map with OSM data overlay.
+    """
 
     box_width = box_size_km / 111
     box_height = box_size_km / 111
