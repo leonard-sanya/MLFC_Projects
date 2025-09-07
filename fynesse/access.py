@@ -1,31 +1,22 @@
 import osmnx as ox
 
 def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
-    """
-    Retrieve OSM datapoints from a bounding box.
-
-    Parameters
-    ----------
-    latitude, longitude : float
-        Center point.
-    box_size_km : float
-        Bounding box size in kilometers.
-    poi_tags : dict
-        Dictionary of tags to query (e.g., {"amenity": True}).
-
-    Returns
-    -------
-    GeoDataFrame or None
-    """
     box_width = box_size_km / 111
     box_height = box_size_km / 111
     north = latitude + box_height
     south = latitude - box_height
     west = longitude - box_width
     east = longitude + box_width
+    tags = poi_tags or {}
 
     try:
-        pois = ox.features_from_bbox(north, south, east, west, tags=poi_tags)
+        if tuple(map(int, ox.__version__.split('.')))[0] >= 2:
+            # OSMnx v2.x+
+            pois = ox.features_from_bbox(north, south, east, west, tags=tags)
+        else:
+            # OSMnx v1.x
+            bbox = (west, south, east, north)
+            pois = ox.features_from_bbox(bbox, tags=tags)
         return pois
     except Exception as e:
         print(f"[Warning] OSM query failed: {e}")
