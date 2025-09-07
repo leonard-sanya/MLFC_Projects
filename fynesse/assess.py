@@ -58,7 +58,7 @@ def get_feature_vector(latitude, longitude, box_size_km=2, features=None):
     """
 
     # Build tags dict
-    tags = {k: True for k, _ in features} if features else {}
+    # tags = {k: True for k, _ in features} if features else {}
 
     # Query OSM
     pois = get_osm_datapoints(latitude, longitude, box_size_km, tags)
