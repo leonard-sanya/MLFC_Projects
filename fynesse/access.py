@@ -23,7 +23,7 @@ def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
     print("working")
     try:
         bbox = (west, south, east, north)
-        pois = ox.features_from_bbox(bbox, poi_tags=tags)
+        pois = ox.features_from_bbox(bbox, tags=tags)
         return pois
 
         print("successful")
