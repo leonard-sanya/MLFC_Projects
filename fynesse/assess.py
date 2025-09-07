@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
-def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None):
+def plot_city_map(place_name, latitude, longitude, box_size_km=2):
     """
     Plot city map with OSM data overlay.
     """
