@@ -41,11 +41,11 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     south = latitude - box_height
     west = longitude - box_width
     east = longitude + box_width
-    bbox = (north, south, east, west)  
+    bbox = (west, south, east, north)  
 
     try:
-        buildings = ox.features_from_bbox(north, south, east, west, tags={"building": True})
-        pois = ox.features_from_bbox(north, south, east, west, tags=poi_tags or {"amenity": True})
+        buildings = ox.features_from_bbox(bbox, tags={"building": True})
+        pois = ox.features_from_bbox(bbox, tags=poi_tags or {"amenity": True})
 
         fig, ax = plt.subplots(figsize=(8, 8))
         buildings.plot(ax=ax, facecolor="lightgrey", alpha=0.7)
