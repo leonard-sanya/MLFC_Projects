@@ -1,17 +1,23 @@
 import osmnx as ox
-import matplotlib.pyplot as plt
+features = [
+    ("building", None),
+    ("amenity", None),
+    ("amenity", "school"),
+    ("amenity", "hospital"),
+    ("amenity", "restaurant"),
+    ("amenity", "cafe"),
+    ("shop", None),
+    ("tourism", None),
+    ("tourism", "hotel"),
+    ("tourism", "museum"),
+    ("leisure", None),
+    ("leisure", "park"),
+    ("historic", None),
+    ("amenity", "place_of_worship"),]
 
-  tags = {
-    "amenity": True
-    # "buildings": True,
-    # "historic": True,
-    # "leisure": True,
-    # "shop": True,
-    # "tourism": True,
-    # "religion": True,
-    # "memorial": True
-  }
-    
+
+tags = {k: True for k, _ in features} if features else {}
+
 def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
 
   
@@ -46,7 +52,7 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     bbox = (west, south, east, north)  
 
     try:
-        buildings = ox.features_from_bbox(bbox, tags=tags)
+        buildings = ox.features_from_bbox(bbox, tags={"building": True})
         # pois = ox.features_from_bbox(bbox, tags=poi_tags or {"amenity": True})
 
         fig, ax = plt.subplots(figsize=(8, 8))
