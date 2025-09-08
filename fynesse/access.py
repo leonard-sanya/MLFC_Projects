@@ -1,8 +1,5 @@
 import osmnx as ox
-
-def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
-
-    tags = {
+  tags = {
     "amenity": True,
     "buildings": True,
     "historic": True,
@@ -11,8 +8,10 @@ def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
     "tourism": True,
     "religion": True,
     "memorial": True}
+    
+def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
 
-
+  
     box_width = box_size_km / 111
     box_height = box_size_km / 111
     north = latitude + box_height
@@ -45,11 +44,11 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
 
     try:
         buildings = ox.features_from_bbox(bbox, tags={"building": True})
-        pois = ox.features_from_bbox(bbox, tags=poi_tags or {"amenity": True})
+        # pois = ox.features_from_bbox(bbox, tags=poi_tags or {"amenity": True})
 
         fig, ax = plt.subplots(figsize=(8, 8))
         buildings.plot(ax=ax, facecolor="lightgrey", alpha=0.7)
-        pois.plot(ax=ax, color="red", markersize=5)
+        # pois.plot(ax=ax, color="red", markersize=5)
 
         plt.title(f"Points of Interest in {place_name}")
         plt.show()
