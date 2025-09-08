@@ -1,13 +1,14 @@
 import osmnx as ox
   tags = {
-    "amenity": True,
-    "buildings": True,
-    "historic": True,
-    "leisure": True,
-    "shop": True,
-    "tourism": True,
-    "religion": True,
-    "memorial": True}
+    "amenity": True
+    # "buildings": True,
+    # "historic": True,
+    # "leisure": True,
+    # "shop": True,
+    # "tourism": True,
+    # "religion": True,
+    # "memorial": True
+  }
     
 def get_osm_datapoints(latitude, longitude, box_size_km=2, poi_tags=None):
 
