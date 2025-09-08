@@ -44,7 +44,6 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     Plot city map with OSM data overlay using a bounding box.
     """
 
-    # --- compute bounding box ---
     box_width = box_size_km / 111  # ~1° lat ≈ 111 km
     box_height = box_size_km / 111
     north = latitude + box_height
@@ -53,15 +52,24 @@ def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None)
     east = longitude + box_width
     bbox = (west, south, east, north)  
 
+
+    graph = ox.graph_from_bbox(bbox)
+    area = ox.geocode_to_gdf(place_name)
+    nodes, edges = ox.graph_to_gdfs(graph)
+
     try:
-        buildings = ox.features_from_bbox(bbox, tags=tags)
-        # pois = ox.features_from_bbox(bbox, tags=poi_tags or {"amenity": True})
+        buildings = ox.features_from_bbox(bbox,tags={"building": True})
+        pois = ox.features_from_bbox(bbox, tags)
 
-        fig, ax = plt.subplots(figsize=(8, 8))
-        buildings.plot(ax=ax, facecolor="lightgrey", alpha=0.7)
-        # pois.plot(ax=ax, color="red", markersize=5)
-
-        plt.title(f"{place_name}")
+        fig, ax = plt.subplots(figsize=(6,6))
+        area.plot(ax=ax, color="tan", alpha=0.5)
+        buildings.plot(ax=ax, facecolor="gray", edgecolor="gray")
+        edges.plot(ax=ax, linewidth=1, edgecolor="black", alpha=0.3)
+        nodes.plot(ax=ax, color="black", markersize=1, alpha=0.3)
+        pois.plot(ax=ax, color="green", markersize=5, alpha=1)
+        ax.set_xlim(west, east)
+        ax.set_ylim(south, north)
+        ax.set_title(place_name, fontsize=14)
         plt.show()
 
     except Exception as e:
