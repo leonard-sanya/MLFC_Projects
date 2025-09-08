@@ -24,27 +24,27 @@ features = [
 
 tags = {k: True for k, _ in features} if features else {}
 
-def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None):
-    """
-    Plot city map with OSM data overlay.
-    """
+# def plot_city_map(place_name, latitude, longitude, box_size_km=2, poi_tags=None):
+#     """
+#     Plot city map with OSM data overlay.
+#     """
 
-    box_width = box_size_km / 111
-    box_height = box_size_km / 111
-    north = latitude + box_height
-    south = latitude - box_height
-    west = longitude - box_width
-    east = longitude + box_width
-    bbox = (west, south, east, north)
+#     box_width = box_size_km / 111
+#     box_height = box_size_km / 111
+#     north = latitude + box_height
+#     south = latitude - box_height
+#     west = longitude - box_width
+#     east = longitude + box_width
+#     bbox = (west, south, east, north)
 
-    try:
-        pois = ox.features_from_bbox(bbox, tags)
-        fig, ax = ox.plot_footprints(ox.geocode_to_gdf(place_name), figsize=(8, 8), show=False, close=False)
-        pois.plot(ax=ax, color="red", markersize=5)
-        plt.title(f"Points of Interest in {place_name}")
-        plt.show()
-    except Exception as e:
-        print(f"[Warning] Could not plot map: {e}")
+#     try:
+#         pois = ox.features_from_bbox(bbox, tags)
+#         fig, ax = ox.plot_footprints(ox.geocode_to_gdf(place_name), figsize=(8, 8), show=False, close=False)
+#         pois.plot(ax=ax, color="red", markersize=5)
+#         plt.title(f"Points of Interest in {place_name}")
+#         plt.show()
+#     except Exception as e:
+#         print(f"[Warning] Could not plot map: {e}")
 
 def get_osm_features(latitude, longitude, box_size_km=2, tags=None):
     """
