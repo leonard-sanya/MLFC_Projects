@@ -1,4 +1,6 @@
 import osmnx as ox
+import matplotlib.pyplot as plt
+
   tags = {
     "amenity": True
     # "buildings": True,
